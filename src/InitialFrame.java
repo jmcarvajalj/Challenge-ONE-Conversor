@@ -35,8 +35,9 @@ public class InitialFrame extends JFrame implements ActionListener {
         String[] tipo = {
                 "Seleccione el tipo de conversor que desea usar",
                 "Conversor de Monedas",
-                "Conversor de Temperatura",
-                "Conversor de Distancia"};
+                "Conversor de Temperaturas",
+                "Conversor de Distancias"
+        };
         conversorComboBox = new JComboBox<>(tipo);
         conversorComboBox.addActionListener(this);
         conversorComboBox.setBounds(130, 130, 340, 30);
@@ -49,10 +50,13 @@ public class InitialFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== conversorComboBox){
             if(conversorComboBox.getSelectedIndex()==1){
-                new MonedaFrame();
+                new MonedasFrame();
                 this.dispose();
             } else if (conversorComboBox.getSelectedIndex()==2) {
-                new TemperaturaFrame();
+                new TemperaturasFrame();
+                this.dispose();
+            } else if (conversorComboBox.getSelectedIndex()==3) {
+                new DistanciasFrame();
                 this.dispose();
             }
         }
