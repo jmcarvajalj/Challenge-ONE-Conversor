@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MonedasFrame extends JFrame implements ActionListener {
-    JComboBox<String> fromCountry, toCountry;
+    JComboBox<String> fromCurrency, toCurrency;
     JButton convertButton, resetButton, backButton;
-    TextField fromText;
-    TextField toText;
+    TextField fromCurrencyText;
+    TextField toCurrencyText;
     double libraEsterlina = 1;
     double dolar = 1.27;
     double pesoColombiano = 5296.07;
@@ -44,13 +44,13 @@ public class MonedasFrame extends JFrame implements ActionListener {
         credits.setFont(new Font("Lato", Font.PLAIN, 11));
         this.add(credits);
 
-        JLabel fromCurrency = new JLabel("De: ");
+        JLabel fromCurrency = new JLabel("De:");
         fromCurrency.setBounds(70, 80, 30, 25);
         fromCurrency.setFont(new Font("Lato",Font.PLAIN, 15));
         fromCurrency.setForeground(Color.white);
         this.add(fromCurrency);
 
-        fromCountry = new JComboBox<>(new String[] {
+        this.fromCurrency = new JComboBox<>(new String[] {
                 "Selecciona moneda",
                 "Peso Colombiano",
                 "Dolar",
@@ -59,23 +59,23 @@ public class MonedasFrame extends JFrame implements ActionListener {
                 "Yen Japonés",
                 "Won Sur-Coreano"
         });
-        fromCountry.setBounds(100, 80, 160, 25);
-        fromCountry.setFont(new Font("Lato", Font.PLAIN, 15));
-        this.add(fromCountry);
+        this.fromCurrency.setBounds(100, 80, 160, 25);
+        this.fromCurrency.setFont(new Font("Lato", Font.PLAIN, 15));
+        this.add(this.fromCurrency);
 
-        fromText = new TextField();
-        fromText.setBounds(300, 80, 200, 25);
-        fromText.setFont(new Font("Lato",Font.PLAIN, 15));
-        fromText.setForeground(Color.BLACK);
-        this.add(fromText);
+        fromCurrencyText = new TextField();
+        fromCurrencyText.setBounds(300, 80, 200, 25);
+        fromCurrencyText.setFont(new Font("Lato",Font.PLAIN, 15));
+        fromCurrencyText.setForeground(Color.BLACK);
+        this.add(fromCurrencyText);
 
-        JLabel toCurrency = new JLabel("A: ");
-        toCurrency.setBounds(70, 120, 30, 25);
+        JLabel toCurrency = new JLabel("A:");
+        toCurrency.setBounds(78, 120, 30, 25);
         toCurrency.setFont(new Font("Lato", Font.PLAIN, 15));
         toCurrency.setForeground(Color.white);
         this.add(toCurrency);
 
-        toCountry = new JComboBox<>(new String[] {
+        this.toCurrency = new JComboBox<>(new String[] {
                 "Selecciona moneda",
                 "Peso Colombiano",
                 "Dolar",
@@ -84,16 +84,16 @@ public class MonedasFrame extends JFrame implements ActionListener {
                 "Yen Japonés",
                 "Won Sur-Coreano"
         });
-        toCountry.setBounds(100, 120, 160, 25);
-        toCountry.setFont(new Font("Lato", Font.PLAIN, 15));
-        this.add(toCountry);
+        this.toCurrency.setBounds(100, 120, 160, 25);
+        this.toCurrency.setFont(new Font("Lato", Font.PLAIN, 15));
+        this.add(this.toCurrency);
 
-        toText = new TextField("");
-        toText.setBounds(300, 120, 200, 25);
-        toText.setFont(new Font("Lato",Font.PLAIN, 15));
-        toText.setForeground(Color.BLACK);
-        toText.setEditable(false);
-        this.add(toText);
+        toCurrencyText = new TextField("");
+        toCurrencyText.setBounds(300, 120, 200, 25);
+        toCurrencyText.setFont(new Font("Lato",Font.PLAIN, 15));
+        toCurrencyText.setForeground(Color.BLACK);
+        toCurrencyText.setEditable(false);
+        this.add(toCurrencyText);
 
         convertButton = new JButton("Convertir");
         convertButton.setBounds(100, 170, 96, 25);
@@ -126,10 +126,10 @@ public class MonedasFrame extends JFrame implements ActionListener {
     }
 
     private void resetButtonActionPerformed() {
-        fromCountry.setSelectedIndex(0);
-        toCountry.setSelectedIndex(0);
-        fromText.setText("");
-        toText.setText("");
+        fromCurrency.setSelectedIndex(0);
+        toCurrency.setSelectedIndex(0);
+        fromCurrencyText.setText("");
+        toCurrencyText.setText("");
     }
 
     private void backButtonActionPerformed() {
@@ -140,14 +140,14 @@ public class MonedasFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == convertButton) {
-            if (fromCountry.getSelectedIndex() == 0 || toCountry.getSelectedIndex() == 0) {
+            if (fromCurrency.getSelectedIndex() == 0 || toCurrency.getSelectedIndex() == 0) {
                 JOptionPane.showMessageDialog(null, "Seleccione las monedas a convertir", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (fromText.getText().equals("")) {
+            } else if (fromCurrencyText.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese la cantidad a convertir", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                double amountToChange = Double.parseDouble(fromText.getText());
+                double amountToChange = Double.parseDouble(fromCurrencyText.getText());
                 double amountInPounds;
-                switch (fromCountry.getSelectedItem().toString()) {
+                switch (fromCurrency.getSelectedItem().toString()) {
                     case "Peso Colombiano":
                         amountInPounds = amountToChange / pesoColombiano;
                         break;
@@ -171,7 +171,7 @@ public class MonedasFrame extends JFrame implements ActionListener {
                 }
 
                 double newAmount;
-                switch (toCountry.getSelectedItem().toString()) {
+                switch (toCurrency.getSelectedItem().toString()) {
                     case "Peso Colombiano":
                         newAmount = amountInPounds * pesoColombiano;
                         break;
@@ -194,7 +194,7 @@ public class MonedasFrame extends JFrame implements ActionListener {
                         newAmount = 0.0;
                 }
                 String amount = String.format("%.5f", newAmount);
-                toText.setText(amount);
+                toCurrencyText.setText(amount);
             }
         }
     }
