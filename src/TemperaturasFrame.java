@@ -2,18 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class TemperaturasFrame extends JFrame implements ActionListener {
-    JComboBox<String> fromCurency, toCurrency;
+    JComboBox<String> fromTemperature, toTemperature;
     JButton convertButton, resetButton, backButton;
-    TextField fromCurrencyText;
-    TextField toCurrencyText;
-    double libraEsterlina = 1;
-    double dolar = 1.27;
-    double pesoColombiano = 5296.07;
-    double euro = 1.16;
-    double yenJapones = 182.47;
-    double wonSurCoreano = 1672.56;
+    TextField fromTemperatureText;
+    TextField toTemperatureText;
 
     public TemperaturasFrame()
     {
@@ -50,24 +45,21 @@ public class TemperaturasFrame extends JFrame implements ActionListener {
         fromCurrency.setForeground(Color.white);
         this.add(fromCurrency);
 
-        fromCurency = new JComboBox<>(new String[] {
-                "Selecciona moneda",
-                "Peso Colombiano",
-                "Dolar",
-                "Euro",
-                "Libra Esterlina",
-                "Yen Japonés",
-                "Won Sur-Coreano"
+        fromTemperature = new JComboBox<>(new String[] {
+                "Selecciona escala",
+                "Celsius",
+                "Kelvin",
+                "Fahrenheit"
         });
-        fromCurency.setBounds(100, 80, 160, 25);
-        fromCurency.setFont(new Font("Lato", Font.PLAIN, 15));
-        this.add(fromCurency);
+        fromTemperature.setBounds(100, 80, 160, 25);
+        fromTemperature.setFont(new Font("Lato", Font.PLAIN, 15));
+        this.add(fromTemperature);
 
-        fromCurrencyText = new TextField();
-        fromCurrencyText.setBounds(300, 80, 200, 25);
-        fromCurrencyText.setFont(new Font("Lato",Font.PLAIN, 15));
-        fromCurrencyText.setForeground(Color.BLACK);
-        this.add(fromCurrencyText);
+        fromTemperatureText = new TextField();
+        fromTemperatureText.setBounds(300, 80, 200, 25);
+        fromTemperatureText.setFont(new Font("Lato",Font.PLAIN, 15));
+        fromTemperatureText.setForeground(Color.BLACK);
+        this.add(fromTemperatureText);
 
         JLabel toCurrency = new JLabel("A: ");
         toCurrency.setBounds(78, 120, 30, 25);
@@ -75,25 +67,22 @@ public class TemperaturasFrame extends JFrame implements ActionListener {
         toCurrency.setForeground(Color.white);
         this.add(toCurrency);
 
-        this.toCurrency = new JComboBox<>(new String[] {
-                "Selecciona moneda",
-                "Peso Colombiano",
-                "Dolar",
-                "Euro",
-                "Libra Esterlina",
-                "Yen Japonés",
-                "Won Sur-Coreano"
+        this.toTemperature = new JComboBox<>(new String[] {
+                "Selecciona escala",
+                "Celsius",
+                "Kelvin",
+                "Fahrenheit"
         });
-        this.toCurrency.setBounds(100, 120, 160, 25);
-        this.toCurrency.setFont(new Font("Lato", Font.PLAIN, 15));
-        this.add(this.toCurrency);
+        this.toTemperature.setBounds(100, 120, 160, 25);
+        this.toTemperature.setFont(new Font("Lato", Font.PLAIN, 15));
+        this.add(this.toTemperature);
 
-        toCurrencyText = new TextField("");
-        toCurrencyText.setBounds(300, 120, 200, 25);
-        toCurrencyText.setFont(new Font("Lato",Font.PLAIN, 15));
-        toCurrencyText.setForeground(Color.BLACK);
-        toCurrencyText.setEditable(false);
-        this.add(toCurrencyText);
+        toTemperatureText = new TextField("");
+        toTemperatureText.setBounds(300, 120, 200, 25);
+        toTemperatureText.setFont(new Font("Lato",Font.PLAIN, 15));
+        toTemperatureText.setForeground(Color.BLACK);
+        toTemperatureText.setEditable(false);
+        this.add(toTemperatureText);
 
         convertButton = new JButton("Convertir");
         convertButton.setBounds(100, 170, 96, 25);
@@ -126,10 +115,10 @@ public class TemperaturasFrame extends JFrame implements ActionListener {
     }
 
     private void resetButtonActionPerformed() {
-        fromCurency.setSelectedIndex(0);
-        toCurrency.setSelectedIndex(0);
-        fromCurrencyText.setText("");
-        toCurrencyText.setText("");
+        fromTemperature.setSelectedIndex(0);
+        toTemperature.setSelectedIndex(0);
+        fromTemperatureText.setText("");
+        toTemperatureText.setText("");
     }
 
     private void backButtonActionPerformed() {
@@ -140,61 +129,38 @@ public class TemperaturasFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == convertButton) {
-            if (fromCurency.getSelectedIndex() == 0 || toCurrency.getSelectedIndex() == 0) {
+            if (fromTemperature.getSelectedIndex() == 0 || toTemperature.getSelectedIndex() == 0) {
                 JOptionPane.showMessageDialog(null, "Seleccione las monedas a convertir", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (fromCurrencyText.getText().equals("")) {
+            } else if (fromTemperatureText.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese la cantidad a convertir", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                double amountToChange = Double.parseDouble(fromCurrencyText.getText());
-                double amountInPounds;
-                switch (fromCurency.getSelectedItem().toString()) {
-                    case "Peso Colombiano":
-                        amountInPounds = amountToChange / pesoColombiano;
-                        break;
-                    case "Dolar":
-                        amountInPounds = amountToChange / dolar;
-                        break;
-                    case "Euro":
-                        amountInPounds = amountToChange / euro;
-                        break;
-                    case "Libra Esterlina":
-                        amountInPounds = amountToChange / libraEsterlina;
-                        break;
-                    case "Yen Japonés":
-                        amountInPounds = amountToChange / yenJapones;
-                        break;
-                    case "Won Sur-Coreano":
-                        amountInPounds = amountToChange / wonSurCoreano;
-                        break;
-                    default:
-                        amountInPounds = 0.0;
+                double amountToChange = Double.parseDouble(fromTemperatureText.getText());
+                double resultAmount = 0;
+
+                if (Objects.equals(fromTemperature.getSelectedItem().toString(), "Fahrenheit")
+                    && Objects.equals(toTemperature.getSelectedItem().toString(), "Celsius")){
+                    resultAmount = (amountToChange - 32) * ((double) 5 /9);
+                } else if (Objects.equals(fromTemperature.getSelectedItem().toString(), "Fahrenheit")
+                        && Objects.equals(toTemperature.getSelectedItem().toString(), "Kelvin")) {
+                    resultAmount = (amountToChange - 32) * ((double) 5 /9) + 273.15;
+                } else if (Objects.equals(fromTemperature.getSelectedItem().toString(), "Celsius")
+                        && Objects.equals(toTemperature.getSelectedItem().toString(), "Kelvin")) {
+                    resultAmount = amountToChange + 273.15;
+                } else if (Objects.equals(fromTemperature.getSelectedItem().toString(), "Celsius")
+                        && Objects.equals(toTemperature.getSelectedItem().toString(), "Fahrenheit")) {
+                    resultAmount = (amountToChange * 9/5) + 32;
+                } else if (Objects.equals(fromTemperature.getSelectedItem().toString(), "Kelvin")
+                        && Objects.equals(toTemperature.getSelectedItem().toString(), "Celsius")) {
+                    resultAmount = amountToChange - 273.15;
+                } else if (Objects.equals(fromTemperature.getSelectedItem().toString(), "Kelvin")
+                        && Objects.equals(toTemperature.getSelectedItem().toString(), "Fahrenheit")) {
+                    resultAmount = (amountToChange - 273.15) * 9/5 + 32;
+                } else if (Objects.equals(fromTemperature.getSelectedItem().toString(), toTemperature.getSelectedItem().toString())){
+                    resultAmount = amountToChange;
                 }
 
-                double newAmount;
-                switch (toCurrency.getSelectedItem().toString()) {
-                    case "Peso Colombiano":
-                        newAmount = amountInPounds * pesoColombiano;
-                        break;
-                    case "Dolar":
-                        newAmount = amountInPounds * dolar;
-                        break;
-                    case "Euro":
-                        newAmount = amountInPounds * euro;
-                        break;
-                    case "Libra Esterlina":
-                        newAmount = amountInPounds * libraEsterlina;
-                        break;
-                    case "Yen Japonés":
-                        newAmount = amountInPounds * yenJapones;
-                        break;
-                    case "Won Sur-Coreano":
-                        newAmount = amountInPounds * wonSurCoreano;
-                        break;
-                    default:
-                        newAmount = 0.0;
-                }
-                String amount = String.format("%.5f", newAmount);
-                toCurrencyText.setText(amount);
+                String finalAmount = String.format("%.5f", resultAmount);
+                toTemperatureText.setText(finalAmount);
             }
         }
     }

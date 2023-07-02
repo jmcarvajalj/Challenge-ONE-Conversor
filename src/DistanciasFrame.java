@@ -4,16 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DistanciasFrame extends JFrame implements ActionListener {
-    JComboBox<String> fromCurrency, toCurrency;
+    JComboBox<String> fromDistance, toDistance;
     JButton convertButton, resetButton, backButton;
-    TextField fromCurrencyText;
-    TextField toCurrencyText;
-    double libraEsterlina = 1;
-    double dolar = 1.27;
-    double pesoColombiano = 5296.07;
-    double euro = 1.16;
-    double yenJapones = 182.47;
-    double wonSurCoreano = 1672.56;
+    TextField fromDistanceText;
+    TextField toDistanceText;
+    double centimeter = 160934;
+    double meter = 1609.34;
+    double kilometer = 1.60934;
+    double foot = 5280;
+    double yard = 1760;
+    double mile = 1;
 
     public DistanciasFrame()
     {
@@ -50,24 +50,24 @@ public class DistanciasFrame extends JFrame implements ActionListener {
         fromCurrency.setForeground(Color.white);
         this.add(fromCurrency);
 
-        this.fromCurrency = new JComboBox<>(new String[] {
-                "Selecciona moneda",
-                "Peso Colombiano",
-                "Dolar",
-                "Euro",
-                "Libra Esterlina",
-                "Yen Japonés",
-                "Won Sur-Coreano"
+        this.fromDistance = new JComboBox<>(new String[] {
+                "Selecciona unidad",
+                "Centímetro",
+                "Metro",
+                "Kilómetro",
+                "Pie",
+                "Yarda",
+                "Milla"
         });
-        this.fromCurrency.setBounds(100, 80, 160, 25);
-        this.fromCurrency.setFont(new Font("Lato", Font.PLAIN, 15));
-        this.add(this.fromCurrency);
+        this.fromDistance.setBounds(100, 80, 160, 25);
+        this.fromDistance.setFont(new Font("Lato", Font.PLAIN, 15));
+        this.add(this.fromDistance);
 
-        fromCurrencyText = new TextField();
-        fromCurrencyText.setBounds(300, 80, 200, 25);
-        fromCurrencyText.setFont(new Font("Lato",Font.PLAIN, 15));
-        fromCurrencyText.setForeground(Color.BLACK);
-        this.add(fromCurrencyText);
+        fromDistanceText = new TextField();
+        fromDistanceText.setBounds(300, 80, 200, 25);
+        fromDistanceText.setFont(new Font("Lato",Font.PLAIN, 15));
+        fromDistanceText.setForeground(Color.BLACK);
+        this.add(fromDistanceText);
 
         JLabel toCurrency = new JLabel("A: ");
         toCurrency.setBounds(78, 120, 30, 25);
@@ -75,25 +75,25 @@ public class DistanciasFrame extends JFrame implements ActionListener {
         toCurrency.setForeground(Color.white);
         this.add(toCurrency);
 
-        this.toCurrency = new JComboBox<>(new String[] {
-                "Selecciona moneda",
-                "Peso Colombiano",
-                "Dolar",
-                "Euro",
-                "Libra Esterlina",
-                "Yen Japonés",
-                "Won Sur-Coreano"
+        this.toDistance = new JComboBox<>(new String[] {
+                "Selecciona unidad",
+                "Centímetro",
+                "Metro",
+                "Kilómetro",
+                "Pie",
+                "Yarda",
+                "Milla"
         });
-        this.toCurrency.setBounds(100, 120, 160, 25);
-        this.toCurrency.setFont(new Font("Lato", Font.PLAIN, 15));
-        this.add(this.toCurrency);
+        this.toDistance.setBounds(100, 120, 160, 25);
+        this.toDistance.setFont(new Font("Lato", Font.PLAIN, 15));
+        this.add(this.toDistance);
 
-        toCurrencyText = new TextField("");
-        toCurrencyText.setBounds(300, 120, 200, 25);
-        toCurrencyText.setFont(new Font("Lato",Font.PLAIN, 15));
-        toCurrencyText.setForeground(Color.BLACK);
-        toCurrencyText.setEditable(false);
-        this.add(toCurrencyText);
+        toDistanceText = new TextField("");
+        toDistanceText.setBounds(300, 120, 200, 25);
+        toDistanceText.setFont(new Font("Lato",Font.PLAIN, 15));
+        toDistanceText.setForeground(Color.BLACK);
+        toDistanceText.setEditable(false);
+        this.add(toDistanceText);
 
         convertButton = new JButton("Convertir");
         convertButton.setBounds(100, 170, 96, 25);
@@ -126,10 +126,10 @@ public class DistanciasFrame extends JFrame implements ActionListener {
     }
 
     private void resetButtonActionPerformed() {
-        fromCurrency.setSelectedIndex(0);
-        toCurrency.setSelectedIndex(0);
-        fromCurrencyText.setText("");
-        toCurrencyText.setText("");
+        fromDistance.setSelectedIndex(0);
+        toDistance.setSelectedIndex(0);
+        fromDistanceText.setText("");
+        toDistanceText.setText("");
     }
 
     private void backButtonActionPerformed() {
@@ -140,61 +140,61 @@ public class DistanciasFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == convertButton) {
-            if (fromCurrency.getSelectedIndex() == 0 || toCurrency.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(null, "Seleccione las monedas a convertir", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (fromCurrencyText.getText().equals("")) {
+            if (fromDistance.getSelectedIndex() == 0 || toDistance.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Seleccione las unidades a convertir", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (fromDistanceText.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese la cantidad a convertir", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                double amountToChange = Double.parseDouble(fromCurrencyText.getText());
-                double amountInPounds;
-                switch (fromCurrency.getSelectedItem().toString()) {
-                    case "Peso Colombiano":
-                        amountInPounds = amountToChange / pesoColombiano;
+                double amountToChange = Double.parseDouble(fromDistanceText.getText());
+                double baseAmount;
+                switch (fromDistance.getSelectedItem().toString()) {
+                    case "Kilómetro":
+                        baseAmount = amountToChange / kilometer;
                         break;
-                    case "Dolar":
-                        amountInPounds = amountToChange / dolar;
+                    case "Metro":
+                        baseAmount = amountToChange / meter;
                         break;
-                    case "Euro":
-                        amountInPounds = amountToChange / euro;
+                    case "Pie":
+                        baseAmount = amountToChange / foot;
                         break;
-                    case "Libra Esterlina":
-                        amountInPounds = amountToChange / libraEsterlina;
+                    case "Centímetro":
+                        baseAmount = amountToChange / centimeter;
                         break;
-                    case "Yen Japonés":
-                        amountInPounds = amountToChange / yenJapones;
+                    case "Yarda":
+                        baseAmount = amountToChange / yard;
                         break;
-                    case "Won Sur-Coreano":
-                        amountInPounds = amountToChange / wonSurCoreano;
+                    case "Milla":
+                        baseAmount = amountToChange / mile;
                         break;
                     default:
-                        amountInPounds = 0.0;
+                        baseAmount = 0.0;
                 }
 
                 double newAmount;
-                switch (toCurrency.getSelectedItem().toString()) {
-                    case "Peso Colombiano":
-                        newAmount = amountInPounds * pesoColombiano;
+                switch (toDistance.getSelectedItem().toString()) {
+                    case "Kilómetro":
+                        newAmount = baseAmount * kilometer;
                         break;
-                    case "Dolar":
-                        newAmount = amountInPounds * dolar;
+                    case "Metro":
+                        newAmount = baseAmount * meter;
                         break;
-                    case "Euro":
-                        newAmount = amountInPounds * euro;
+                    case "Pie":
+                        newAmount = baseAmount * foot;
                         break;
-                    case "Libra Esterlina":
-                        newAmount = amountInPounds * libraEsterlina;
+                    case "Centímetro":
+                        newAmount = baseAmount * centimeter;
                         break;
-                    case "Yen Japonés":
-                        newAmount = amountInPounds * yenJapones;
+                    case "Yarda":
+                        newAmount = baseAmount * yard;
                         break;
-                    case "Won Sur-Coreano":
-                        newAmount = amountInPounds * wonSurCoreano;
+                    case "Milla":
+                        newAmount = baseAmount * mile;
                         break;
                     default:
                         newAmount = 0.0;
                 }
-                String amount = String.format("%.5f", newAmount);
-                toCurrencyText.setText(amount);
+                String finalAmount = String.format("%.10f", newAmount);
+                toDistanceText.setText(finalAmount);
             }
         }
     }

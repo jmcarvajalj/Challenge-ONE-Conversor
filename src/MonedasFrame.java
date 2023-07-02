@@ -8,12 +8,12 @@ public class MonedasFrame extends JFrame implements ActionListener {
     JButton convertButton, resetButton, backButton;
     TextField fromCurrencyText;
     TextField toCurrencyText;
-    double libraEsterlina = 1;
-    double dolar = 1.27;
-    double pesoColombiano = 5296.07;
+    double sterlingPound = 1;
+    double dollar = 1.27;
+    double colombianPeso = 5296.07;
     double euro = 1.16;
-    double yenJapones = 182.47;
-    double wonSurCoreano = 1672.56;
+    double japaneseYen = 182.47;
+    double koreanWon = 1672.56;
 
     public MonedasFrame()
     {
@@ -53,7 +53,7 @@ public class MonedasFrame extends JFrame implements ActionListener {
         this.fromCurrency = new JComboBox<>(new String[] {
                 "Selecciona moneda",
                 "Peso Colombiano",
-                "Dolar",
+                "Dólar",
                 "Euro",
                 "Libra Esterlina",
                 "Yen Japonés",
@@ -78,7 +78,7 @@ public class MonedasFrame extends JFrame implements ActionListener {
         this.toCurrency = new JComboBox<>(new String[] {
                 "Selecciona moneda",
                 "Peso Colombiano",
-                "Dolar",
+                "Dólar",
                 "Euro",
                 "Libra Esterlina",
                 "Yen Japonés",
@@ -146,55 +146,55 @@ public class MonedasFrame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Ingrese la cantidad a convertir", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 double amountToChange = Double.parseDouble(fromCurrencyText.getText());
-                double amountInPounds;
+                double baseAmount;
                 switch (fromCurrency.getSelectedItem().toString()) {
                     case "Peso Colombiano":
-                        amountInPounds = amountToChange / pesoColombiano;
+                        baseAmount = amountToChange / colombianPeso;
                         break;
-                    case "Dolar":
-                        amountInPounds = amountToChange / dolar;
+                    case "Dólar":
+                        baseAmount = amountToChange / dollar;
                         break;
                     case "Euro":
-                        amountInPounds = amountToChange / euro;
+                        baseAmount = amountToChange / euro;
                         break;
                     case "Libra Esterlina":
-                        amountInPounds = amountToChange / libraEsterlina;
+                        baseAmount = amountToChange / sterlingPound;
                         break;
                     case "Yen Japonés":
-                        amountInPounds = amountToChange / yenJapones;
+                        baseAmount = amountToChange / japaneseYen;
                         break;
                     case "Won Sur-Coreano":
-                        amountInPounds = amountToChange / wonSurCoreano;
+                        baseAmount = amountToChange / koreanWon;
                         break;
                     default:
-                        amountInPounds = 0.0;
+                        baseAmount = 0.0;
                 }
 
                 double newAmount;
                 switch (toCurrency.getSelectedItem().toString()) {
                     case "Peso Colombiano":
-                        newAmount = amountInPounds * pesoColombiano;
+                        newAmount = baseAmount * colombianPeso;
                         break;
-                    case "Dolar":
-                        newAmount = amountInPounds * dolar;
+                    case "Dólar":
+                        newAmount = baseAmount * dollar;
                         break;
                     case "Euro":
-                        newAmount = amountInPounds * euro;
+                        newAmount = baseAmount * euro;
                         break;
                     case "Libra Esterlina":
-                        newAmount = amountInPounds * libraEsterlina;
+                        newAmount = baseAmount * sterlingPound;
                         break;
                     case "Yen Japonés":
-                        newAmount = amountInPounds * yenJapones;
+                        newAmount = baseAmount * japaneseYen;
                         break;
                     case "Won Sur-Coreano":
-                        newAmount = amountInPounds * wonSurCoreano;
+                        newAmount = baseAmount * koreanWon;
                         break;
                     default:
                         newAmount = 0.0;
                 }
-                String amount = String.format("%.5f", newAmount);
-                toCurrencyText.setText(amount);
+                String finalAmount = String.format("%.5f", newAmount);
+                toCurrencyText.setText(finalAmount);
             }
         }
     }
