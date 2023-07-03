@@ -18,7 +18,7 @@ Consiste en la creación de un conversor de divisas utilizando el lenguaje Java.
 
 Requisitos:
 
-El convertidor de moneda debe:
+El convertidor de moneda debe tener la habilidad de:
 
         - Convertir de la moneda de tu país a Dólar
         - Convertir de la moneda de tu país a Euros
@@ -26,7 +26,7 @@ El convertidor de moneda debe:
         - Convertir de la moneda de tu país a Yen Japonés
         - Convertir de la moneda de tu país a Won sul-coreano
 
-Recordando que también debe ser posible convertir inversamente, es decir:
+Recordando que también debe ser posible convertir inversamente, es decir, poder:
 
         - Convertir de Dólar a la moneda de tu país
         - Convertir de Euros a la moneda de tu país
